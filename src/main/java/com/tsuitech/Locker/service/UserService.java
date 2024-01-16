@@ -26,6 +26,9 @@ public class UserService {
         addCustomerRepo.save(addCustomer);
     }
 
+    public List<AddCustomer> getAllCustomers() {
+        return addCustomerRepo.findAll();
+    }
     @Autowired
     private ProfileRepository profileRepo;
     public void addProfile(Profile profile)
@@ -121,12 +124,6 @@ public class UserService {
         }
         return null;
     }
-
-   public List<AddCustomer> getFilteredCustomers(String userName, String emailId, String mobile, String imeiNumber1, String code, Date createdDate) {
-        return addCustomerRepo.findByUserNameAndEmailIdAndMobileAndImeiNumber1AndCodeAndCreatedDate
-                (userName, emailId, mobile, imeiNumber1, code, createdDate);
-    }
-
 
     public AddCustomer getDetailsByUserName(String userName)
     {

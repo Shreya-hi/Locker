@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -29,4 +30,8 @@ public class AddCustomer {
     private String serialNo;
     private Date purchaseDate;
     private Integer customerPin;
+
+
+    public void addAttribute(String al, List<AddCustomer> customers) {
+    }
 }

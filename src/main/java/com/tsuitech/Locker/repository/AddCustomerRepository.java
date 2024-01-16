@@ -9,9 +9,6 @@ import java.util.List;
 
 @Repository
 public interface AddCustomerRepository extends JpaRepository<AddCustomer, Integer> {
-    List<AddCustomer> findByUserNameAndEmailIdAndMobileAndImeiNumber1AndCodeAndCreatedDate(
-            String userName, String emailId, String mobile, String imeiNumber1, String code,
-            Date createdDate);
-
     AddCustomer findByUserName(String username);
+
 }

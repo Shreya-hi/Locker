@@ -1,20 +1,19 @@
 package com.tsuitech.Locker.controller;
 
 import com.tsuitech.Locker.dao.*;
-import com.tsuitech.Locker.repository.ImageRepository;
 import com.tsuitech.Locker.repository.RetailerTableRepository;
 import com.tsuitech.Locker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.ResultSet;
+import java.util.*;
 
 @Controller
 @RestController
@@ -22,8 +21,6 @@ public class AppController {
 
     @Autowired
     UserService userService;
-
-
 
     @PostMapping("/save")
     public void saveData(@RequestBody RegistrationDao registrationDao)
@@ -37,22 +34,20 @@ public class AppController {
         userService.addCustomerData(addCustomer);
     }
 
-    @GetMapping("/viewList")
-    public List<AddCustomer> viewCustomerList()
+    @GetMapping("/customer-list")
+    public List<AddCustomer> getCustomerListPage(AddCustomer addCustomer)
+            //we can also pass (Model model) as parameter in above method. In that case no need to create addAttribute
     {
-        AddCustomer addCustomer=new AddCustomer();
-        List<AddCustomer> al=userService.getFilteredCustomers(addCustomer.getUserName(),
-                addCustomer.getEmailId(), addCustomer.getMobile(), addCustomer.getImeiNumber2(),
-                addCustomer.getCode(), addCustomer.getCreatedDate());
-        return al;
+        List<AddCustomer> customers = userService.getAllCustomers();
+        addCustomer.addAttribute("al", customers);
+        return customers;
     }
-    @PostMapping("/viewByName")
 
+    @PostMapping("/viewByName")
     public AddCustomer viewByName(@RequestParam String name)
     {
         return userService.getDetailsByUserName(name);
     }
-
 
     @PostMapping("/newProfile")
     public void addProfile(@RequestBody Profile profile)
